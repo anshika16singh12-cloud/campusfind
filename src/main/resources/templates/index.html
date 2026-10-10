@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CampusFind – Lost & Found</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <h1>🎓 CampusFind</h1>
+        <p>Lost & Found Management System</p>
+    </header>
+
+    <div class="container">
+        <div class="actions">
+            <a th:href="@{/}" class="btn">📋 All Items</a>
+            <a th:href="@{/filter(type='LOST')}" class="btn red">🔍 Lost</a>
+            <a th:href="@{/filter(type='FOUND')}" class="btn green">🤝 Found</a>
+            <a th:href="@{/report}" class="btn blue">➕ Report Item</a>
+        </div>
+
+        <form th:action="@{/search}" method="get" class="search-bar">
+            <input type="text" name="keyword" placeholder="Search items..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div th:if="${items.isEmpty()}" class="empty">
+            <p>No items found 😢 Report the first one!</p>
+        </div>
+
+        <div class="grid">
+            <div th:each="item : ${items}" class="card">
+                <span class="badge" th:classappend="${item.itemType == 'LOST'} ? ' lost' : ' found'"
+                      th:text="${item.itemType}"></span>
+                <h3 th:text="${item.name}"></h3>
+                <p th:text="${item.description}"></p>
+                <p>📍 <span th:text="${item.location}"></span></p>
+                <p>📞 <span th:text="${item.contact}"></span></p>
+                <p>🗓️ <span th:text="${item.dateAdded}"></span></p>
+                <a th:href="@{/delete/{id}(id=${item.id})}" class="delete"
+                   onclick="return confirm('Delete this item?')">🗑️ Delete</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

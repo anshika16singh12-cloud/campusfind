@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Report Item – CampusFind</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <header>
+        <h1>➕ Report an Item</h1>
+    </header>
+
+    <div class="container">
+        <form th:action="@{/save}" th:object="${item}" method="post" class="form-card">
+            <label>Item Name:</label>
+            <input type="text" th:field="*{name}" required>
+
+            <label>Description:</label>
+            <textarea th:field="*{description}" required></textarea>
+
+            <label>Location:</label>
+            <input type="text" th:field="*{location}" required>
+
+            <label>Type:</label>
+            <select th:field="*{itemType}">
+                <option value="LOST">Lost</option>
+                <option value="FOUND">Found</option>
+            </select>
+
+            <label>Contact (name + phone):</label>
+            <input type="text" th:field="*{contact}" required>
+
+            <button type="submit" class="btn blue full">Submit Report</button>
+            <a th:href="@{/}" class="btn">← Back to Home</a>
+        </form>
+    </div>
+</body>
+</html>
